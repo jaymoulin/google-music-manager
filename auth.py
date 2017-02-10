@@ -8,4 +8,5 @@ from gmusicapi import Musicmanager
 if __name__ == "__main__":
     path=sys.argv[1] if len(sys.argv) > 1 else '/root/oauth'
     api = Musicmanager()
-    api.perform_oauth(path)
+    if api.perform_oauth(path) == True:
+        print("Logged successfully")
