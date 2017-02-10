@@ -19,9 +19,10 @@ if __name__ == "__main__":
     logging.basicConfig(format=FORMAT)
     logging.info("Init Daemon - Press Ctrl+C to quit")
     path = sys.argv[1] if len(sys.argv) > 1 else '.'
+    oauth = sys.argv[2] if len(sys.argv) >= 2 else '/root/oauth'
     api = Musicmanager()
     event_handler = MusicToUpload(api)
-    if api.login(sys.argv[2]) if len(sys.argv) >= 2 else '/root/oauth') == False:
+    if api.login(oauth) == False:
         return False
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)
