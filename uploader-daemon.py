@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Usage ./daemon.py [music_folder=.] [path_to_oauth_cred_file=/root/oauth]
+# Usage ./uploader-daemon.py [music_folder=.] [path_to_oauth_cred_file=/root/oauth]
 
 import sys
 import time

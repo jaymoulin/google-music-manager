@@ -41,16 +41,29 @@ Follow the prompts, then paste the auth code here and hit enter:
 Usage
 -----
 
+## Uploader
+
 This program will scan a given directory for new elements to upload them to Google Music.
 First, launch the daemon to watch a directory new inputs.
 
 It will *NOT* upload already existing files, *ONLY* new files while the daemon is running. (Please contribute if you want this to change)
 
 ```
-# Usage ./daemon.py [music_folder=.] [path_to_oauth_cred_file=/root/oauth]
+# Usage ./uploader-daemon.py [music_folder=.] [path_to_oauth_cred_file=/root/oauth]
 ```
 
 Pass the first parameter to specify which directory to watch (recursively)
+Pass the second parameter to specify the oauth file to use (created by `auth.py`)
+
+## Downloader
+
+This program will download all your uploaded musics from Google Music to a given directory.
+
+```
+# Usage ./download.py [music_folder=.] [path_to_oauth_cred_file=/root/oauth]
+```
+
+Pass the first parameter to specify which directory to download to
 Pass the second parameter to specify the oauth file to use (created by `auth.py`)
 
 About
