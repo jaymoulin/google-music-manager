@@ -17,8 +17,8 @@ if __name__ == "__main__":
     api = Musicmanager()
     if api.login(oauth) != False:
         for song in api.get_uploaded_songs():
-            folder_path = '%s/%s/%s' % (path, song['album_artist'], song['album'])
-            file_path = '%s/%d - %s.mp3' % (folder_path, song['track_number'], song['title'])
+            folder_path = os.path.join(path, song['album_artist'], song['album'])
+            file_path = os.path.join(folder_path, '%d - %s.mp3' % (song['track_number'], song['title'].replace('/', '_')))
             file_path = file_path.encode('utf8')
             folder_path = folder_path.encode('utf8')
             if os.path.exists(file_path) == False:
