@@ -5,6 +5,7 @@
 import sys
 import time
 import logging
+import os
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from gmusicapi import Musicmanager
@@ -13,6 +14,8 @@ class MusicToUpload(FileSystemEventHandler):
     def on_created(self,event):
         self.logger.info("Uploading "+event.src_path)
         self.api.upload(event.src_path, True)
+        if self.willDelete == True:
+            os.remove(event.src_path)
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
@@ -20,9 +23,11 @@ if __name__ == "__main__":
     logger.info("Init Daemon - Press Ctrl+C to quit")
     path = sys.argv[1] if len(sys.argv) > 1 else '.'
     oauth = sys.argv[2] if len(sys.argv) > 2 else '/root/oauth'
+    willDelete = True if len(sys.argv) > 3 else False
     api = Musicmanager()
     event_handler = MusicToUpload()
     event_handler.api = api
+    event_handler.willDelete = willDelete
     event_handler.logger = logger
     if api.login(oauth) != False:
         observer = Observer()
