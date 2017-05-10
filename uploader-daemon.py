@@ -12,8 +12,12 @@ from gmusicapi import Musicmanager
 
 class MusicToUpload(FileSystemEventHandler):
     def on_created(self,event):
-        self.logger.info("Uploading "+event.src_path)
-        self.api.upload(event.src_path, True)
+        self.logger.info("Detected "+event.src_path)
+        files = event.src_path
+        if os.path.isdir(event.src_path) == True:
+            files = [f for f in os.path.listdir(event.src_path) if os.path.isfile(join(event.src_path, f))]
+        self.logger.info("Uploading "+files)
+        self.api.upload(files, True)
         if self.willDelete == True:
             os.remove(event.src_path)
 
