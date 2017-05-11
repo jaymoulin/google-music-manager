@@ -10,16 +10,25 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from gmusicapi import Musicmanager
 
+
 class MusicToUpload(FileSystemEventHandler):
-    def on_created(self,event):
-        self.logger.info("Detected "+event.src_path)
-        files = event.src_path
-        if os.path.isdir(event.src_path) == True:
-            files = [f for f in os.listdir(event.src_path) if os.path.isfile(os.path.join(event.src_path, f))]
-        self.logger.info("Uploading...")
-        self.api.upload(files, True)
-        if self.willDelete == True:
+    def on_created(self, event):
+        self.logger.info("Detected " + event.src_path)
+        if os.path.isdir(event.src_path):
+            for f in os.listdir(event.src_path):
+                file_path = os.path.join(event.src_path, f)
+                if os.path.isfile(file_path):
+                    self.logger.info("Uploading : " + file_path)
+                    self.api.upload(file_path, True)
+                    if self.willDelete:
+                        os.remove(file_path)
+        else:
+            self.logger.info("Uploading : " + event.src_path)
+            self.api.upload(event.src_path, True)
+
+        if self.willDelete:
             os.remove(event.src_path)
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
@@ -33,14 +42,14 @@ if __name__ == "__main__":
     event_handler.api = api
     event_handler.willDelete = willDelete
     event_handler.logger = logger
-    if api.login(oauth) != False:
-        if willDelete == True:
-            files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
-            logger.info("Uploading...")
-            api.upload(files, True)
-            for f in files:
-                logger.info("Deleting "+f)
-                os.remove(f)
+    if api.login(oauth):
+        if willDelete:
+            for f in os.listdir(path):
+                file_path = os.path.join(path, f)
+                if os.path.isfile(file_path):
+                    logger.info("Uploading : " + file_path)
+                    api.upload(file_path, True)
+                    os.remove(file_path)
         observer = Observer()
         observer.schedule(event_handler, path, recursive=True)
         observer.start()
