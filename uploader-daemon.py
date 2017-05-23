@@ -6,6 +6,7 @@ import sys
 import time
 import logging
 import os
+import glob
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from gmusicapi import Musicmanager
@@ -15,8 +16,8 @@ class MusicToUpload(FileSystemEventHandler):
     def on_created(self, event):
         self.logger.info("Detected " + event.src_path)
         if os.path.isdir(event.src_path):
-            for f in os.listdir(event.src_path):
-                file_path = os.path.join(event.src_path, f)
+            files = [file for file in glob.glob(path + '/**/*', recursive=True)]
+            for file_path in files:
                 if os.path.isfile(file_path):
                     self.logger.info("Uploading : " + file_path)
                     self.api.upload(file_path, True)
@@ -44,8 +45,8 @@ if __name__ == "__main__":
     event_handler.logger = logger
     if api.login(oauth):
         if willDelete:
-            for f in os.listdir(path):
-                file_path = os.path.join(path, f)
+            files = [file for file in glob.glob(path + '/**/*', recursive=True)]
+            for file_path in files:
                 if os.path.isfile(file_path):
                     logger.info("Uploading : " + file_path)
                     api.upload(file_path, True)
