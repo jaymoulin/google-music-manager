@@ -1,6 +1,6 @@
-#!/usr/bin/python3
+#!/usr/local/bin/python3
 
-# Usage ./uploader-daemon.py [music_folder=.] [path_to_oauth_cred_file=/root/oauth]
+# Usage ./uploader-daemon.py [music_folder=.] [path_to_oauth_cred_file=/root/oauth] [remove_file=True|false]
 
 import sys
 import time
@@ -14,9 +14,9 @@ from gmusicapi import Musicmanager
 
 class MusicToUpload(FileSystemEventHandler):
     def on_created(self, event):
-        self.logger.info("Detected " + event.src_path)
-        if os.path.isdir(event.src_path):
-            files = [file for file in glob.glob(path + '/**/*', recursive=True)]
+        self.logger.info("Detected new files!")
+        if os.path.isdir(self.path):
+            files = [file for file in glob.glob(self.path + '/**/*', recursive=True)]
             for file_path in files:
                 if os.path.isfile(file_path):
                     self.logger.info("Uploading : " + file_path)
@@ -26,9 +26,8 @@ class MusicToUpload(FileSystemEventHandler):
         else:
             self.logger.info("Uploading : " + event.src_path)
             self.api.upload(event.src_path, True)
-
-        if self.willDelete:
-            os.remove(event.src_path)
+            if self.willDelete:
+                os.remove(event.src_path)
 
 
 if __name__ == "__main__":
@@ -41,6 +40,7 @@ if __name__ == "__main__":
     api = Musicmanager()
     event_handler = MusicToUpload()
     event_handler.api = api
+    event_handler.path = path
     event_handler.willDelete = willDelete
     event_handler.logger = logger
     if api.login(oauth):
