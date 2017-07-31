@@ -37,13 +37,14 @@ if __name__ == "__main__":
     path = sys.argv[1] if len(sys.argv) > 1 else '.'
     oauth = sys.argv[2] if len(sys.argv) > 2 else '/root/oauth'
     willDelete = True if len(sys.argv) > 3 else False
+    uploaderId = sys.argv[4] if len(sys.argv) > 4 else '00:00:00:00:00:00'
     api = Musicmanager()
     event_handler = MusicToUpload()
     event_handler.api = api
     event_handler.path = path
     event_handler.willDelete = willDelete
     event_handler.logger = logger
-    if api.login(oauth):
+    if api.login(oauth, uploaderId):
         if willDelete:
             files = [file for file in glob.glob(path + '/**/*', recursive=True)]
             for file_path in files:
