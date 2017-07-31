@@ -52,10 +52,10 @@ It will *NOT* upload already existing files, *ONLY* new files while the daemon i
 # Usage ./uploader-daemon.py [music_folder=.] [path_to_oauth_cred_file=/root/oauth] [deleteFiles=True] [uploaderId=00:00:00:00:00:00]
 ```
 
-Pass the first parameter to specify which directory to watch (recursively)
-Pass the second parameter to specify the oauth file to use (created by `auth.py`)
-Pass the third parameter to specify if you want to auto delete files after upload
-Pass the fourt parameter to specify uploader id if you want change it or if you have issue with MAX_PER_MACHINE_USERS_EXCEEDED
+- Pass the first parameter to specify which directory to watch (recursively)
+- Pass the second parameter to specify the oauth file to use (created by `auth.py`)
+- Pass the third parameter to specify if you want to auto delete files after upload
+- Pass the fourt parameter to specify uploader id if you want change it or if you have issue with MAX_PER_MACHINE_USERS_EXCEEDED
 
 ## Downloader
 
