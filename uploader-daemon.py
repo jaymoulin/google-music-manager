@@ -7,6 +7,7 @@ import time
 import logging
 import os
 import glob
+import netifaces
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from gmusicapi import Musicmanager
@@ -37,7 +38,7 @@ if __name__ == "__main__":
     path = sys.argv[1] if len(sys.argv) > 1 else '.'
     oauth = sys.argv[2] if len(sys.argv) > 2 else '/root/oauth'
     willDelete = True if len(sys.argv) > 3 else False
-    uploaderId = sys.argv[4] if len(sys.argv) > 4 else '00:00:00:00:00:00'
+    uploaderId = sys.argv[4] if len(sys.argv) > 4 else netifaces.ifaddresses('eth0')[netifaces.AF_LINK][0]['addr'].upper()
     api = Musicmanager()
     event_handler = MusicToUpload()
     event_handler.api = api

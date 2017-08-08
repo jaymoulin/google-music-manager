@@ -13,7 +13,7 @@ also, this program needs `watchdog`, `gmusicapi` and `bs4` Python libraries to w
 
 ```
 apt-get install python3-pip libav-tools build-essential
-pip3 install watchdog gmusicapi bs4
+pip3 install watchdog gmusicapi bs4 netifaces
 ```
 
 Once installed, You have to authenticate to Google Music via the `auth.py` script 
