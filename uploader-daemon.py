@@ -21,13 +21,13 @@ class MusicToUpload(FileSystemEventHandler):
             for file_path in files:
                 if os.path.isfile(file_path):
                     self.logger.info("Uploading : " + file_path)
-                    self.api.upload(file_path, True)
-                    if self.willDelete:
+                    uploaded, matched, not_uploaded = self.api.upload(file_path, True)
+                    if (uploaded or matched) and self.willDelete:
                         os.remove(file_path)
         else:
             self.logger.info("Uploading : " + event.src_path)
-            self.api.upload(event.src_path, True)
-            if self.willDelete:
+            uploaded, matched, not_uploaded = self.api.upload(event.src_path, True)
+            if self.willDelete and (uploaded or matched):
                 os.remove(event.src_path)
 
 
@@ -51,8 +51,9 @@ if __name__ == "__main__":
             for file_path in files:
                 if os.path.isfile(file_path):
                     logger.info("Uploading : " + file_path)
-                    api.upload(file_path, True)
-                    os.remove(file_path)
+                    uploaded, matched, not_uploaded = api.upload(file_path, True)
+                    if uploaded or matched:
+                        os.remove(file_path)
         observer = Observer()
         observer.schedule(event_handler, path, recursive=True)
         observer.start()
