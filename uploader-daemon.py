@@ -37,7 +37,7 @@ if __name__ == "__main__":
     logger.info("Init Daemon - Press Ctrl+C to quit")
     path = sys.argv[1] if len(sys.argv) > 1 else '.'
     oauth = sys.argv[2] if len(sys.argv) > 2 else '/root/oauth'
-    willDelete = True if len(sys.argv) > 3 else False
+    willDelete = True if len(sys.argv) > 3 and sys.argv[3].lower() in ['true', '1', 't', 'y', 'yes'] else False
     uploaderId = sys.argv[4] if len(sys.argv) > 4 else netifaces.ifaddresses('eth0')[netifaces.AF_LINK][0]['addr'].upper()
     api = Musicmanager()
     event_handler = MusicToUpload()
