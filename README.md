@@ -13,7 +13,7 @@ Installation
 ------------
 
 Avconv is needed to convert some of your files due to Google's MP3 constraint
-also, this program needs `watchdog`, `gmusicapi` and `bs4` Python libraries to work. 
+also, this program needs `watchdog`, `gmusicapi`, `netifaces` and `bs4` Python libraries to work. 
 
 ```
 apt-get install python3-pip libav-tools build-essential
@@ -23,15 +23,11 @@ pip3 install watchdog gmusicapi bs4 netifaces
 Once installed, You have to authenticate to Google Music via the `auth.py` script 
 
 ```
-# Usage ./auth.py [path_to_oauth_cred_file=/root/oauth]
+# Usage ./auth.py [path_to_oauth_cred_file=~/oauth]
 ```
 
-If first parameter is not defined, the script will try to store/load your oauth credentials through the `/root/oauth` file.
+If first parameter is not defined, the script will try to store/load your oauth credentials through the `~/oauth` file.
 
-It's suggested to use your own user to do so:
-```
-./auth.py ~/oauth
-```
 Then follow prompted instructions.
 
 You will be asked to go to a Google URL to allow the connection:
@@ -53,24 +49,35 @@ First, launch the daemon to watch a directory new inputs.
 It will *NOT* upload already existing files, *ONLY* new files while the daemon is running. (Please contribute if you want this to change)
 
 ```
-# Usage ./uploader-daemon.py [music_folder=.] [path_to_oauth_cred_file=/root/oauth] [deleteFiles=False] [uploaderId=00:00:00:00:00:00]
-```
+usage: uploader-daemon.py [-h] [--directory DIRECTORY] [--oauth OAUTH] [-r]
+                          [--uploader_id UPLOADER_ID]
 
-- Pass the first parameter to specify which directory to watch (recursively)
-- Pass the second parameter to specify the oauth file to use (created by `auth.py`)
-- Pass the third parameter to specify if you want to auto delete files after upload (True, y, yes, 1, t)
-- Pass the fourth parameter to specify uploader id if you want change it or if you have issue with MAX_PER_MACHINE_USERS_EXCEEDED
+optional arguments:
+  -h, --help            show this help message and exit
+  --directory DIRECTORY, -d DIRECTORY
+                        Music Folder to upload from (default: .)
+  --oauth OAUTH, -a OAUTH
+                        Path to oauth file (default: ~/oauth)
+  -r, --remove          Remove files if present (default: False)
+  --uploader_id UPLOADER_ID, -u UPLOADER_ID
+                        Uploader identification (should be an uppercase MAC
+                        address) (default: <current eth0 MAC address>)
+```
 
 ## Downloader
 
 This program will download all your uploaded musics from Google Music to a given directory.
 
 ```
-# Usage ./download.py [music_folder=.] [path_to_oauth_cred_file=/root/oauth]
-```
+usage: download.py [-h] [--directory DIRECTORY] [--oauth OAUTH]
 
-Pass the first parameter to specify which directory to download to
-Pass the second parameter to specify the oauth file to use (created by `auth.py`)
+optional arguments:
+  -h, --help            show this help message and exit
+  --directory DIRECTORY, -d DIRECTORY
+                        Music Folder to download to (default: .)
+  --oauth OAUTH, -a OAUTH
+                        Path to oauth file (default: ~/oauth)
+```
 
 About
 =====
