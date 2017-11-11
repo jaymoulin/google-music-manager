@@ -1,9 +1,12 @@
-Google Music Uploader - Python Daemon
-=====================================
+Google Music Manager - Python Daemon
+====================================
 
 [![latest release](https://img.shields.io/github/release/jaymoulin/google-music-manager.svg "latest release")](http://github.com/jaymoulin/google-music-manager/releases)
 [![Bitcoin donation](https://github.com/jaymoulin/jaymoulin.github.io/raw/master/btc.png "Bitcoin donation")](https://m.freewallet.org/id/374ad82e/btc)
 [![Litecoin donation](https://github.com/jaymoulin/jaymoulin.github.io/raw/master/ltc.png "Litecoin donation")](https://m.freewallet.org/id/374ad82e/ltc)
+[![PayPal donation](https://github.com/jaymoulin/jaymoulin.github.io/raw/master/ppl.png "PayPal donation")](https://www.paypal.me/jaymoulin)
+[![Beerpay donation](https://beerpay.io/jaymoulin/google-music-manager/badge.svg "Beerpay donation")](https://beerpay.io/jaymoulin/google-music-manager)
+
 
 This program will replace former Google MusicManager to upload your music library to Google Music
 
