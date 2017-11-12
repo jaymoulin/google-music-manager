@@ -1,0 +1,5 @@
+build
+dist
+googlemusicmanager.egg-info
+lib/googlemusicmanager.egg-info
+lib/__pycache__

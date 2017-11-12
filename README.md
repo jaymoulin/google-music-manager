@@ -52,7 +52,7 @@ First, launch the daemon to watch a directory new inputs.
 It will *NOT* upload already existing files, *ONLY* new files while the daemon is running. (Please contribute if you want this to change)
 
 ```
-usage: uploader-daemon.py [-h] [--directory DIRECTORY] [--oauth OAUTH] [-r]
+usage: uploader_daemon.py [-h] [--directory DIRECTORY] [--oauth OAUTH] [-r]
                           [--uploader_id UPLOADER_ID]
 
 optional arguments:
