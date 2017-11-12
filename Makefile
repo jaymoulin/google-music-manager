@@ -1,9 +1,17 @@
-.PHONY: install clean
+.PHONY: install clean check
 
+test:
+	make install
+	twine upload -r testpypi dist/*
+publish:
+	make install
+	twine upload dist/*
 install:
 	make clean
+	make check
 	sudo python3 setup.py sdist
-	twine upload dist/*
+check:
+	python3 setup.py check --restructuredtext
 build:
 	mkdir -p build
 dist:

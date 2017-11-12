@@ -26,7 +26,6 @@ def download(directory=".", oauth="~/oauth"):
             if not os.path.exists(folder_path):
                 os.makedirs(folder_path)
             with open(file_path, 'wb') as f:
-
                 f.write(audio)
 
 
@@ -36,3 +35,7 @@ def main():
     parser.add_argument("--oauth", '-a', default='~/oauth', help="Path to oauth file (default: ~/oauth)")
     args = parser.parse_args()
     download(args.directory, args.oauth)
+
+
+if __name__ == "__main__":
+    main()

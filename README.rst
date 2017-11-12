@@ -1,0 +1,133 @@
+====================================
+Google Music Manager - Python Daemon
+====================================
+
+.. image:: https://img.shields.io/github/release/jaymoulin/google-music-manager.svg
+    :alt: latest release
+    :align: right
+    :target: http://github.com/jaymoulin/google-music-manager/releases
+.. image:: https://img.shields.io/pypi/v/googlemusicmanager.svg
+    :alt: PyPI version
+    :align: right
+    :target: https://pypi.org/project/googlemusicmanager/
+.. image:: https://github.com/jaymoulin/jaymoulin.github.io/raw/master/btc.png
+    :alt: Bitcoin donation
+    :align: right
+    :target: https://m.freewallet.org/id/374ad82e/btc
+.. image:: https://github.com/jaymoulin/jaymoulin.github.io/raw/master/ltc.png
+    :alt: Litecoin donation
+    :align: right
+    :target: https://m.freewallet.org/id/374ad82e/ltc
+.. image:: https://github.com/jaymoulin/jaymoulin.github.io/raw/master/ppl.png
+    :alt: PayPal donation
+    :align: right
+    :target: https://www.paypal.me/jaymoulin
+.. image:: https://beerpay.io/femtopixel/docker-google-closure-compiler-api/badge.svg
+    :alt: Beerpay donation
+    :align: right
+    :target: https://beerpay.io/femtopixel/docker-google-closure-compiler-api
+
+
+This program will replace former Google MusicManager to upload your music library to Google Music
+
+This work is based upon `Simon Weber's Google Music API <https://github.com/simon-weber/gmusicapi>`_.
+
+Installation
+------------
+
+Avconv is needed to convert some of your files due to Google's MP3 constraint
+also, this program needs `watchdog`, `gmusicapi`, `netifaces` and `bs4` Python libraries to work. 
+
+.. code::
+
+    apt-get install python3-pip libav-tools build-essential
+    pip3 install watchdog gmusicapi bs4 netifaces
+
+
+Once installed, You have to authenticate to Google Music via the `auth.py` script 
+
+.. code::
+
+    # Usage ./auth.py [path_to_oauth_cred_file=~/oauth]
+
+
+If first parameter is not defined, the script will try to store/load your oauth credentials through the `~/oauth` file.
+
+Then follow prompted instructions.
+
+You will be asked to go to a Google URL to allow the connection:
+
+.. code::
+
+    Visit the following url:
+        https://accounts.google.com/o/oauth2/v2/auth?client_id=XXXXXXXXXXX.apps.googleusercontent.com&access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fmusicmanager&response_type=code&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob
+    Follow the prompts, then paste the auth code here and hit enter:
+
+Usage
+-----
+
+Uploader
+~~~~~~~~
+
+This program will scan a given directory for new elements to upload them to Google Music.
+First, launch the daemon to watch a directory new inputs.
+
+It will *NOT* upload already existing files, *ONLY* new files while the daemon is running. (Please contribute if you want this to change)
+
+.. code::
+
+    usage: uploader_daemon.py [-h] [--directory DIRECTORY] [--oauth OAUTH] [-r]
+                              [--uploader_id UPLOADER_ID]
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --directory DIRECTORY, -d DIRECTORY
+                            Music Folder to upload from (default: .)
+      --oauth OAUTH, -a OAUTH
+                            Path to oauth file (default: ~/oauth)
+      -r, --remove          Remove files if present (default: False)
+      --uploader_id UPLOADER_ID, -u UPLOADER_ID
+                            Uploader identification (should be an uppercase MAC
+                            address) (default: <current eth0 MAC address>)
+
+Downloader
+~~~~~~~~~~
+
+This program will download all your uploaded musics from Google Music to a given directory.
+
+.. code::
+
+    usage: download.py [-h] [--directory DIRECTORY] [--oauth OAUTH]
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --directory DIRECTORY, -d DIRECTORY
+                            Music Folder to download to (default: .)
+      --oauth OAUTH, -a OAUTH
+                            Path to oauth file (default: ~/oauth)
+
+
+=====
+About
+=====
+
+Requirements
+------------
+
+Google Music Uploader works with Python 3 or above.
+It requires `Simon Weber's Google Music API <https://github.com/simon-weber/gmusicapi>`_ and `Watchdog <https://pypi.python.org/pypi/watchdog>`_.
+
+Submitting bugs and feature requests
+------------------------------------
+
+Bugs and feature request are tracked on GitHub
+
+Author
+------
+
+Jay MOULIN jaymoulin@gmail.com See also the list of contributors which participated in this program.
+
+License
+-------
+
+Google Music Uploader is licensed under the MIT License

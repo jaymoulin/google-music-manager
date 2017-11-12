@@ -17,3 +17,7 @@ def auth(auth_file='~/oauth'):
 
 def main():
     auth(sys.argv[1] if len(sys.argv) > 1 else '~/oauth')
+
+
+if __name__ == "__main__":
+    main()

@@ -72,3 +72,7 @@ def main():
                         help="Uploader identification (should be an uppercase MAC address) (default: <current eth0 MAC address>)")
     args = parser.parse_args()
     upload(args.directory, args.oauth, args.remove, args.uploader_id)
+
+
+if __name__ == "__main__":
+    main()
