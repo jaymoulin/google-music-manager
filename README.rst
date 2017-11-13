@@ -5,9 +5,15 @@ Google Music Manager - Python Daemon
 .. image:: https://img.shields.io/github/release/jaymoulin/google-music-manager.svg
     :alt: latest release
     :target: http://github.com/jaymoulin/google-music-manager/releases
-.. image:: https://img.shields.io/pypi/v/googlemusicmanager.svg
+.. image:: https://img.shields.io/pypi/v/google-music-manager-auth.svg
     :alt: PyPI version
-    :target: https://pypi.org/project/googlemusicmanager/
+    :target: https://pypi.org/project/google-music-manager-auth/
+.. image:: https://img.shields.io/pypi/v/google-music-manager-downloader.svg
+    :alt: PyPI version
+    :target: https://pypi.org/project/google-music-manager-downloader/
+.. image:: https://img.shields.io/pypi/v/google-music-manager-uploader.svg
+    :alt: PyPI version
+    :target: https://pypi.org/project/google-music-manager-uploader/
 .. image:: https://github.com/jaymoulin/jaymoulin.github.io/raw/master/btc.png
     :alt: Bitcoin donation
     :target: https://m.freewallet.org/id/374ad82e/btc
@@ -17,7 +23,7 @@ Google Music Manager - Python Daemon
 .. image:: https://github.com/jaymoulin/jaymoulin.github.io/raw/master/ppl.png
     :alt: PayPal donation
     :target: https://www.paypal.me/jaymoulin
-.. image:: https://beerpay.io/jaymoulin/googl-music-manager/badge.svg
+.. image:: https://beerpay.io/jaymoulin/google-music-manager/badge.svg
     :alt: Beerpay donation
     :target: https://beerpay.io/jaymoulin/googl-music-manager
 
