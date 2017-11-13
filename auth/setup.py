@@ -3,7 +3,7 @@
 
 from setuptools import setup, find_packages
 
-__version__ = '0.7.1'
+__version__ = '0.7.2'
 
 setup(
     name='google_music_manager_auth',
@@ -13,7 +13,7 @@ setup(
     author="Jay MOULIN",
     author_email="jaymoulin@gmail.com",
     description="Google MusicManager package to manage your music library to Google Music - Auth module",
-    long_description=open('google_music_manager_auth/README.rst').read(),
+    long_description=open('README.rst').read(),
     install_requires=["gmusicapi"],
     include_package_data=True,
     url='http://github.com/jaymoulin/google-music-manager/',
