@@ -1,21 +1,30 @@
 .PHONY: install clean check
 
 test:
-	make install
-	twine upload -r testpypi dist/*
+	cd auth && make test && cd ..
+	cd downloader && make test && cd ..
+	cd uploader && make test && cd ..
 publish:
-	make install
-	twine upload dist/*
+	cd auth && make publish && cd ..
+	cd downloader && make publish && cd ..
+	cd uploader && make publish && cd ..
 install:
-	make clean
-	make check
-	sudo python3 setup.py sdist
+	cd auth && make install && cd ..
+	cd downloader && make install && cd ..
+	cd uploader && make install && cd ..
 check:
-	python3 setup.py check --restructuredtext
+	cd auth && make check && cd ..
+	cd downloader && make check && cd ..
+	cd uploader && make check && cd ..
 build:
-	mkdir -p build
+	cd auth && make build && cd ..
+	cd downloader && make build && cd ..
+	cd uploader && make build && cd ..
 dist:
-	mkdir -p dist
+	cd auth && make dist && cd ..
+	cd downloader && make dist && cd ..
+	cd uploader && make dist && cd ..
 clean: build dist
-	sudo rm -Rf build/*
-	sudo rm -Rf dist/*
+	cd auth && make clean && cd ..
+	cd downloader && make clean && cd ..
+	cd uploader && make clean && cd ..
