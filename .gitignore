@@ -1,5 +1,3 @@
 build
 dist
-googlemusicmanager.egg-info
-lib/googlemusicmanager.egg-info
-lib/__pycache__
+google_music_manager*.egg-info
