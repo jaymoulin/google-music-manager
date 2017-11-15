@@ -19,10 +19,6 @@ Google Music Manager - Uploader
 .. image:: https://github.com/jaymoulin/jaymoulin.github.io/raw/master/ppl.png
     :alt: PayPal donation
     :target: https://www.paypal.me/jaymoulin
-.. image:: https://beerpay.io/jaymoulin/google-music-manager/badge.svg
-    :alt: Beerpay donation
-    :target: https://beerpay.io/jaymoulin/google-music-manager
-
 
 This program will replace former Google MusicManager to upload your music library to Google Music
 
