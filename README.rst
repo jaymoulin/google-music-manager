@@ -1,3 +1,7 @@
+.. image:: https://github.com/jaymoulin/google-music-manager/logo.png
+    :alt: logo
+    :target: http://github.com/jaymoulin/google-music-manager
+
 ====================================
 Google Music Manager - Python Daemon
 ====================================
