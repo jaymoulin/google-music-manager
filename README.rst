@@ -1,4 +1,4 @@
-.. image:: https://github.com/jaymoulin/google-music-manager/logo.png
+.. image:: https://raw.githubusercontent.com/jaymoulin/google-music-manager/master/logo.png
     :alt: logo
     :target: http://github.com/jaymoulin/google-music-manager
 
