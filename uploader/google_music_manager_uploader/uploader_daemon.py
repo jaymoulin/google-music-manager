@@ -28,7 +28,7 @@ class MusicToUpload(FileSystemEventHandler):
                 os.remove(event.src_path)
 
 
-def upload(directory='.', oauth='~/oauth', remove=False,
+def upload(directory='.', oauth=os.environ['HOME'] + '/oauth', remove=False,
            uploader_id=netifaces.ifaddresses('eth0')[netifaces.AF_LINK][0]['addr'].upper()):
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -65,7 +65,7 @@ def upload(directory='.', oauth='~/oauth', remove=False,
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--directory", '-d', default='.', help="Music Folder to upload from (default: .)")
-    parser.add_argument("--oauth", '-a', default='~/oauth', help="Path to oauth file (default: ~/oauth)")
+    parser.add_argument("--oauth", '-a', default=os.environ['HOME'] + '/oauth', help="Path to oauth file (default: ~/oauth)")
     parser.add_argument("-r", "--remove", action='store_true', help="Remove files if present (default: False)")
     parser.add_argument("--uploader_id", '-u',
                         default=netifaces.ifaddresses('eth0')[netifaces.AF_LINK][0]['addr'].upper(),

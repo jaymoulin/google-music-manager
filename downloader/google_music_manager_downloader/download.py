@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys, time, logging, os.path, argparse
+import sys, time, logging, os.path, argparse, os
 from gmusicapi import Musicmanager
 
 __all__ = ['download']
 
 
-def download(directory=".", oauth="~/oauth"):
+def download(directory=".", oauth=os.environ['HOME'] + "/oauth"):
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     logger.info("Init Daemon - Press Ctrl+C to quit")
@@ -32,7 +32,7 @@ def download(directory=".", oauth="~/oauth"):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--directory", '-d', default='.', help="Music Folder to download to (default: .)")
-    parser.add_argument("--oauth", '-a', default='~/oauth', help="Path to oauth file (default: ~/oauth)")
+    parser.add_argument("--oauth", '-a', default=os.environ['HOME'] + '/oauth', help="Path to oauth file (default: ~/oauth)")
     args = parser.parse_args()
     download(args.directory, args.oauth)
 
