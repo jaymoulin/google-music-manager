@@ -43,6 +43,17 @@ also, this program needs `watchdog`, `gmusicapi`, `netifaces` and `bs4` Python l
     apt-get install python3-pip libav-tools build-essential
     pip3 install watchdog gmusicapi bs4 netifaces
 
+Then install the package you need
+
+.. code::
+
+    pip3 install google-music-manager-downloader
+
+Or
+
+.. code::
+
+    pip3 install google-music-manager-uploader
 
 Once installed, You have to authenticate to Google Music via the `google-music-auth` command
 
