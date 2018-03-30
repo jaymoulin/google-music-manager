@@ -9,6 +9,8 @@ from gmusicapi import Musicmanager
 
 __all__ = ['upload']
 
+__DEFAULT_IFACE__ = netifaces.gateways()['default'][netifaces.AF_INET][1]
+__DEFAULT_MAC__ = netifaces.ifaddresses(__DEFAULT_IFACE__)[netifaces.AF_LINK][0]['addr'].upper()
 
 class MusicToUpload(FileSystemEventHandler):
     def on_created(self, event):
@@ -28,8 +30,7 @@ class MusicToUpload(FileSystemEventHandler):
                 os.remove(event.src_path)
 
 
-def upload(directory='.', oauth=os.environ['HOME'] + '/oauth', remove=False,
-           uploader_id=netifaces.ifaddresses('eth0')[netifaces.AF_LINK][0]['addr'].upper()):
+def upload(directory='.', oauth=os.environ['HOME'] + '/oauth', remove=False, uploader_id=__DEFAULT_MAC__):
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     logger.info("Init Daemon - Press Ctrl+C to quit")
@@ -68,7 +69,7 @@ def main():
     parser.add_argument("--oauth", '-a', default=os.environ['HOME'] + '/oauth', help="Path to oauth file (default: ~/oauth)")
     parser.add_argument("-r", "--remove", action='store_true', help="Remove files if present (default: False)")
     parser.add_argument("--uploader_id", '-u',
-                        default=netifaces.ifaddresses('eth0')[netifaces.AF_LINK][0]['addr'].upper(),
+                        default=__DEFAULT_MAC__,
                         help="Uploader identification (should be an uppercase MAC address) (default: <current eth0 MAC address>)")
     args = parser.parse_args()
     upload(args.directory, args.oauth, args.remove, args.uploader_id)
