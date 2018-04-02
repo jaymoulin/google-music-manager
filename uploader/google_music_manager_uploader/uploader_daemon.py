@@ -44,14 +44,13 @@ def upload(directory='.', oauth=os.environ['HOME'] + '/oauth', remove=False, upl
     if not api.login(oauth, uploader_id):
         print("Error with oauth credentials")
         sys.exit(1)
-    if remove:
-        files = [file for file in glob.glob(directory + '/**/*', recursive=True)]
-        for file_path in files:
-            if os.path.isfile(file_path):
-                logger.info("Uploading : " + file_path)
-                uploaded, matched, not_uploaded = api.upload(file_path, True)
-                if uploaded or matched:
-                    os.remove(file_path)
+    files = [file for file in glob.glob(directory + '/**/*', recursive=True)]
+    for file_path in files:
+        if os.path.isfile(file_path):
+            logger.info("Uploading : " + file_path)
+            uploaded, matched, not_uploaded = api.upload(file_path, True)
+            if remove and (uploaded or matched):
+                os.remove(file_path)
     observer = Observer()
     observer.schedule(event_handler, directory, recursive=True)
     observer.start()
