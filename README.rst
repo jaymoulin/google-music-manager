@@ -87,19 +87,20 @@ It will *NOT* upload already existing files, *ONLY* new files while the daemon i
 
 .. code::
 
-    usage: google-music-upload [-h] [--directory DIRECTORY] [--oauth OAUTH] [-r]
-                              [--uploader_id UPLOADER_ID]
+    usage: google-music-uploader [-h] [--directory DIRECTORY] [--oauth OAUTH] [-r]
+                                  [--uploader_id UPLOADER_ID] [-o]
 
-    optional arguments:
-      -h, --help            show this help message and exit
-      --directory DIRECTORY, -d DIRECTORY
-                            Music Folder to upload from (default: .)
-      --oauth OAUTH, -a OAUTH
-                            Path to oauth file (default: ~/oauth)
-      -r, --remove          Remove files if present (default: False)
-      --uploader_id UPLOADER_ID, -u UPLOADER_ID
-                            Uploader identification (should be an uppercase MAC
-                            address) (default: <current eth0 MAC address>)
+        optional arguments:
+          -h, --help            show this help message and exit
+          --directory DIRECTORY, -d DIRECTORY
+                                Music Folder to upload from (default: .)
+          --oauth OAUTH, -a OAUTH
+                                Path to oauth file (default: ~/oauth)
+          -r, --remove          Remove files if present (default: False)
+          --uploader_id UPLOADER_ID, -u UPLOADER_ID
+                                Uploader identification (should be an uppercase MAC
+                                address) (default: <current eth0 MAC address>)
+          -o, --oneshot         Upload folder and exit (default: False)
 
 Downloader
 ~~~~~~~~~~

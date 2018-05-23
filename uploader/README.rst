@@ -69,7 +69,7 @@ It will *NOT* upload already existing files, *ONLY* new files while the daemon i
 .. code::
 
     usage: google-music-uploader [-h] [--directory DIRECTORY] [--oauth OAUTH] [-r]
-                              [--uploader_id UPLOADER_ID]
+                              [--uploader_id UPLOADER_ID] [-o]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -81,6 +81,7 @@ It will *NOT* upload already existing files, *ONLY* new files while the daemon i
       --uploader_id UPLOADER_ID, -u UPLOADER_ID
                             Uploader identification (should be an uppercase MAC
                             address) (default: <current eth0 MAC address>)
+      -o, --oneshot         Upload folder and exit (default: False)
 
 =====
 About
