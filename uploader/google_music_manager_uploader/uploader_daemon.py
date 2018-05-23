@@ -30,17 +30,12 @@ class MusicToUpload(FileSystemEventHandler):
                 os.remove(event.src_path)
 
 
-def upload(directory='.', oauth=os.environ['HOME'] + '/oauth', remove=False, uploader_id=__DEFAULT_MAC__):
+def upload(directory='.', oauth=os.environ['HOME'] + '/oauth', remove=False, uploader_id=__DEFAULT_MAC__, oneshot=False):
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     logger.info("Init Daemon - Press Ctrl+C to quit")
 
     api = Musicmanager()
-    event_handler = MusicToUpload()
-    event_handler.api = api
-    event_handler.path = directory
-    event_handler.willDelete = remove
-    event_handler.logger = logger
     if not api.login(oauth, uploader_id):
         print("Error with oauth credentials")
         sys.exit(1)
@@ -51,15 +46,22 @@ def upload(directory='.', oauth=os.environ['HOME'] + '/oauth', remove=False, upl
             uploaded, matched, not_uploaded = api.upload(file_path, True)
             if remove and (uploaded or matched):
                 os.remove(file_path)
-    observer = Observer()
-    observer.schedule(event_handler, directory, recursive=True)
-    observer.start()
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        observer.stop()
-    observer.join()
+
+    if not oneshot:
+        event_handler = MusicToUpload()
+        event_handler.api = api
+        event_handler.path = directory
+        event_handler.willDelete = remove
+        event_handler.logger = logger
+        observer = Observer()
+        observer.schedule(event_handler, directory, recursive=True)
+        observer.start()
+        try:
+            while True:
+                time.sleep(1)
+        except KeyboardInterrupt:
+            observer.stop()
+        observer.join()
 
 
 def main():
@@ -70,8 +72,9 @@ def main():
     parser.add_argument("--uploader_id", '-u',
                         default=__DEFAULT_MAC__,
                         help="Uploader identification (should be an uppercase MAC address) (default: <current eth0 MAC address>)")
+    parser.add_argument("--oneshot", '-o', action='store_true', help="Upload folder and exit (default: False)")
     args = parser.parse_args()
-    upload(args.directory, args.oauth, args.remove, args.uploader_id)
+    upload(args.directory, args.oauth, args.remove, args.uploader_id, args.oneshot)
 
 
 if __name__ == "__main__":
