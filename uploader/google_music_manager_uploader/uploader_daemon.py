@@ -16,7 +16,7 @@ class MusicToUpload(FileSystemEventHandler):
     def on_created(self, event):
         self.logger.info("Detected new files!")
         if os.path.isdir(self.path):
-            files = [file for file in glob.glob(self.path + '/**/*', recursive=True)]
+            files = [file for file in glob.glob(glob.escape(self.path) + '/**/*', recursive=True)]
             for file_path in files:
                 if os.path.isfile(file_path):
                     self.logger.info("Uploading : " + file_path)
@@ -39,7 +39,7 @@ def upload(directory='.', oauth=os.environ['HOME'] + '/oauth', remove=False, upl
     if not api.login(oauth, uploader_id):
         print("Error with oauth credentials")
         sys.exit(1)
-    files = [file for file in glob.glob(directory + '/**/*', recursive=True)]
+    files = [file for file in glob.glob(glob.escape(directory) + '/**/*', recursive=True)]
     for file_path in files:
         if os.path.isfile(file_path):
             logger.info("Uploading : " + file_path)
