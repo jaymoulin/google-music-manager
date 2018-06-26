@@ -42,6 +42,9 @@ def upload_file(api, file_path, logger, oauth=os.environ['HOME'] + '/oauth', upl
                 if not api.login(oauth, uploader_id):
                     print("Error with oauth credentials")
                     sys.exit(1)
+            elif "502" in error_message:
+                retry -= 1
+                time.sleep(30)
             else:
                 raise e
 
