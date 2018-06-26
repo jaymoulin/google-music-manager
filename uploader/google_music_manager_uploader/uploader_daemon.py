@@ -6,6 +6,7 @@ import sys, time, logging, os, glob, netifaces, argparse
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from gmusicapi import Musicmanager
+from gmusicapi.exceptions import CallFailure
 
 __all__ = ['upload']
 
@@ -19,16 +20,30 @@ class MusicToUpload(FileSystemEventHandler):
         if os.path.isdir(self.path):
             files = [file for file in glob.glob(glob.escape(self.path) + '/**/*', recursive=True)]
             for file_path in files:
-                if os.path.isfile(file_path):
-                    self.logger.info("Uploading : " + file_path)
-                    uploaded, matched, not_uploaded = self.api.upload(file_path, True)
-                    if (uploaded or matched) and self.willDelete:
-                        os.remove(file_path)
+                upload_file(self.api, file_path, self.logger, self.oauth, self.uploader_id, self.remove)
         else:
-            self.logger.info("Uploading : " + event.src_path)
-            uploaded, matched, not_uploaded = self.api.upload(event.src_path, True)
-            if self.willDelete and (uploaded or matched):
-                os.remove(event.src_path)
+            upload_file(self.api, event.src_path, self.logger, self.oauth, self.uploader_id, self.remove)
+
+
+def upload_file(api, file_path, logger, oauth=os.environ['HOME'] + '/oauth', uploader_id=__DEFAULT_MAC__, remove=False):
+    retry = 5
+    while retry > 0:
+        try:
+            if os.path.isfile(file_path):
+                logger.info("Uploading : " + file_path)
+                uploaded, matched, not_uploaded = api.upload(file_path, True)
+                if remove and (uploaded or matched):
+                    os.remove(file_path)
+                retry = 0
+        except CallFailure as e:
+            error_message = str(e)
+            if "401" in error_message:
+                retry -= 1
+                if not api.login(oauth, uploader_id):
+                    print("Error with oauth credentials")
+                    sys.exit(1)
+            else:
+                raise e
 
 
 def upload(directory='.', oauth=os.environ['HOME'] + '/oauth', remove=False, uploader_id=__DEFAULT_MAC__,
@@ -43,18 +58,15 @@ def upload(directory='.', oauth=os.environ['HOME'] + '/oauth', remove=False, upl
         sys.exit(1)
     files = [file for file in glob.glob(glob.escape(directory) + '/**/*', recursive=True)]
     for file_path in files:
-        if os.path.isfile(file_path):
-            logger.info("Uploading : " + file_path)
-            uploaded, matched, not_uploaded = api.upload(file_path, True)
-            if remove and (uploaded or matched):
-                os.remove(file_path)
-
+        upload_file(api, file_path, logger, oauth, uploader_id, remove)
     if oneshot:
         sys.exit(0)
     event_handler = MusicToUpload()
     event_handler.api = api
+    event_handler.oauth = oauth
+    event_handler.uploader_id = uploader_id
     event_handler.path = directory
-    event_handler.willDelete = remove
+    event_handler.remove = remove
     event_handler.logger = logger
     observer = Observer()
     observer.schedule(event_handler, directory, recursive=True)
