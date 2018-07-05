@@ -1,14 +1,10 @@
 .PHONY: install clean check
 
-test:
-	make install
+test: install
 	twine upload -r testpypi dist/*
-publish:
-	make install
+publish: install
 	twine upload dist/*
-install:
-	make clean
-	make check
+install: clean check
 	sudo python3 setup.py sdist
 check:
 	python3 setup.py check --restructuredtext

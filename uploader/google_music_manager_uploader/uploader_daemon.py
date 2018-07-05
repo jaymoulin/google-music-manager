@@ -34,7 +34,7 @@ def upload_file(api, file_path, logger, oauth=os.environ['HOME'] + '/oauth', upl
                 uploaded, matched, not_uploaded = api.upload(file_path, True)
                 if remove and (uploaded or matched):
                     os.remove(file_path)
-                retry = 0
+            retry = 0
         except CallFailure as e:
             error_message = str(e)
             if "401" in error_message:
@@ -59,21 +59,23 @@ def upload(directory='.', oauth=os.environ['HOME'] + '/oauth', remove=False, upl
     if not api.login(oauth, uploader_id):
         print("Error with oauth credentials")
         sys.exit(1)
+    observer = None
+    if not oneshot:
+        event_handler = MusicToUpload()
+        event_handler.api = api
+        event_handler.oauth = oauth
+        event_handler.uploader_id = uploader_id
+        event_handler.path = directory
+        event_handler.remove = remove
+        event_handler.logger = logger
+        observer = Observer()
+        observer.schedule(event_handler, directory, recursive=True)
+        observer.start()
     files = [file for file in glob.glob(glob.escape(directory) + '/**/*', recursive=True)]
     for file_path in files:
         upload_file(api, file_path, logger, oauth, uploader_id, remove)
     if oneshot:
         sys.exit(0)
-    event_handler = MusicToUpload()
-    event_handler.api = api
-    event_handler.oauth = oauth
-    event_handler.uploader_id = uploader_id
-    event_handler.path = directory
-    event_handler.remove = remove
-    event_handler.logger = logger
-    observer = Observer()
-    observer.schedule(event_handler, directory, recursive=True)
-    observer.start()
     try:
         while True:
             time.sleep(1)
