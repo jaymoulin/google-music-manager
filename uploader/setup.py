@@ -3,7 +3,7 @@
 
 from setuptools import setup, find_packages
 
-__version__ = '1.2.1'
+__version__ = '1.2.2'
 
 setup(
     name='google_music_manager_uploader',

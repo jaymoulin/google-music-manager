@@ -37,11 +37,8 @@ def upload_file(api, file_path, logger, oauth=os.environ['HOME'] + '/oauth', upl
             retry = 0
         except CallFailure as e:
             error_message = str(e)
+            retry -= 1
             if "401" in error_message:
-                retry -= 1
-                if not api.login(oauth, uploader_id):
-                    print("Error with oauth credentials")
-                    sys.exit(1)
             elif "502" in error_message:
                 retry -= 1
                 time.sleep(30)
