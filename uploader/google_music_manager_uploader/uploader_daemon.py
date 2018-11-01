@@ -20,12 +20,12 @@ class MusicToUpload(FileSystemEventHandler):
         if os.path.isdir(self.path):
             files = [file for file in glob.glob(glob.escape(self.path) + '/**/*', recursive=True)]
             for file_path in files:
-                upload_file(self.api, file_path, self.logger, self.oauth, self.uploader_id, self.remove)
+                upload_file(self.api, file_path, self.logger, remove=self.remove)
         else:
-            upload_file(self.api, event.src_path, self.logger, self.oauth, self.uploader_id, self.remove)
+            upload_file(self.api, event.src_path, self.logger, remove=self.remove)
 
 
-def upload_file(api, file_path, logger, oauth=os.environ['HOME'] + '/oauth', uploader_id=__DEFAULT_MAC__, remove=False):
+def upload_file(api, file_path, logger, remove=False):
     retry = 5
     while retry > 0:
         try:
@@ -46,8 +46,13 @@ def upload_file(api, file_path, logger, oauth=os.environ['HOME'] + '/oauth', upl
                 raise e
 
 
-def upload(directory='.', oauth=os.environ['HOME'] + '/oauth', remove=False, uploader_id=__DEFAULT_MAC__,
-           oneshot=False):
+def upload(
+    directory='.',
+    oauth=os.environ['HOME'] + '/oauth',
+    remove=False,
+    uploader_id=__DEFAULT_MAC__,
+    oneshot=False
+):
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     logger.info("Init Daemon - Press Ctrl+C to quit")
@@ -70,7 +75,7 @@ def upload(directory='.', oauth=os.environ['HOME'] + '/oauth', remove=False, upl
         observer.start()
     files = [file for file in glob.glob(glob.escape(directory) + '/**/*', recursive=True)]
     for file_path in files:
-        upload_file(api, file_path, logger, oauth, uploader_id, remove)
+        upload_file(api, file_path, logger, remove=remove)
     if oneshot:
         sys.exit(0)
     try:
@@ -84,12 +89,19 @@ def upload(directory='.', oauth=os.environ['HOME'] + '/oauth', remove=False, upl
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--directory", '-d', default='.', help="Music Folder to upload from (default: .)")
-    parser.add_argument("--oauth", '-a', default=os.environ['HOME'] + '/oauth',
-                        help="Path to oauth file (default: ~/oauth)")
+    parser.add_argument(
+        "--oauth",
+        '-a',
+        default=os.environ['HOME'] + '/oauth',
+        help="Path to oauth file (default: ~/oauth)"
+    )
     parser.add_argument("-r", "--remove", action='store_true', help="Remove files if present (default: False)")
-    parser.add_argument("--uploader_id", '-u',
-                        default=__DEFAULT_MAC__,
-                        help="Uploader identification (should be an uppercase MAC address) (default: <current eth0 MAC address>)")
+    parser.add_argument(
+        "--uploader_id",
+        '-u',
+        default=__DEFAULT_MAC__,
+        help="Uploader identification (should be an uppercase MAC address) (default: <current eth0 MAC address>)"
+    )
     parser.add_argument("--oneshot", '-o', action='store_true', help="Upload folder and exit (default: False)")
     args = parser.parse_args()
     upload(args.directory, args.oauth, args.remove, args.uploader_id, args.oneshot)

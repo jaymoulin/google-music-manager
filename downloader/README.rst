@@ -27,6 +27,8 @@ This work is based upon `Simon Weber's Google Music API <https://github.com/simo
 Installation
 ------------
 
+This program needs `netifaces` Python library to work.
+
 .. code::
 
     apt-get install python3-pip build-essential
@@ -65,11 +67,14 @@ This program will download all your uploaded musics from Google Music to a given
     usage: google-music-download [-h] [--directory DIRECTORY] [--oauth OAUTH]
 
     optional arguments:
-      -h, --help            show this help message and exit
-      --directory DIRECTORY, -d DIRECTORY
+        -h, --help            show this help message and exit
+        --directory DIRECTORY, -d DIRECTORY
                             Music Folder to download to (default: .)
-      --oauth OAUTH, -a OAUTH
+        --oauth OAUTH, -a OAUTH
                             Path to oauth file (default: ~/oauth)
+        --uploader_id UPLOADER_ID, -u UPLOADER_ID
+                            Uploader identification (should be an uppercase MAC
+                            address) (default: <current eth0 MAC address>)
 
 
 =====

@@ -1,18 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys, time, logging, os.path, argparse, os
+import sys, time, logging, os.path, netifaces, argparse, os
 from gmusicapi import Musicmanager
 
 __all__ = ['download']
 
+__DEFAULT_IFACE__ = netifaces.gateways()['default'][netifaces.AF_INET][1]
+__DEFAULT_MAC__ = netifaces.ifaddresses(__DEFAULT_IFACE__)[netifaces.AF_LINK][0]['addr'].upper()
 
-def download(directory=".", oauth=os.environ['HOME'] + "/oauth"):
+
+def download(directory=".", oauth=os.environ['HOME'] + "/oauth", device_id=__DEFAULT_MAC__):
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     logger.info("Init Daemon - Press Ctrl+C to quit")
     api = Musicmanager()
-    if not api.login(oauth):
+    if not api.login(oauth, device_id):
         print("Error with oauth credentials")
         sys.exit(1)
 
@@ -32,9 +35,20 @@ def download(directory=".", oauth=os.environ['HOME'] + "/oauth"):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--directory", '-d', default='.', help="Music Folder to download to (default: .)")
-    parser.add_argument("--oauth", '-a', default=os.environ['HOME'] + '/oauth', help="Path to oauth file (default: ~/oauth)")
+    parser.add_argument(
+        "--oauth",
+        '-a',
+        default=os.environ['HOME'] + '/oauth',
+        help="Path to oauth file (default: ~/oauth)"
+    )
+    parser.add_argument(
+        "--device_id",
+        '-i',
+        default=__DEFAULT_MAC__,
+        help="Uploader identification (should be an uppercase MAC address) (default: <current eth0 MAC address>)"
+    )
     args = parser.parse_args()
-    download(args.directory, args.oauth)
+    download(args.directory, oauth=args.oauth, device_id=args.device_id)
 
 
 if __name__ == "__main__":

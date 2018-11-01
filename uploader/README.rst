@@ -78,8 +78,8 @@ It will *NOT* upload already existing files, *ONLY* new files while the daemon i
       --oauth OAUTH, -a OAUTH
                             Path to oauth file (default: ~/oauth)
       -r, --remove          Remove files if present (default: False)
-      --uploader_id UPLOADER_ID, -u UPLOADER_ID
-                            Uploader identification (should be an uppercase MAC
+      --device_id DEVICE_ID, -i DEVICE_ID
+                            Device identification (should be an uppercase MAC
                             address) (default: <current eth0 MAC address>)
       -o, --oneshot         Upload folder and exit (default: False)
 

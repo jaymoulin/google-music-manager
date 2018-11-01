@@ -3,7 +3,7 @@
 
 from setuptools import setup, find_packages
 
-__version__ = '1.1.0'
+__version__ = '1.2.0'
 
 setup(
     name='google_music_manager_downloader',
@@ -14,7 +14,7 @@ setup(
     author_email="jaymoulin@gmail.com",
     description="Google MusicManager package to manage your music library to Google Music - Download module",
     long_description=open('README.rst').read(),
-    install_requires=["google_music_manager_auth"],
+    install_requires=["google_music_manager_auth", "netifaces"],
     include_package_data=True,
     url='http://github.com/jaymoulin/google-music-manager',
     classifiers=[
