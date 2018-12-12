@@ -1,14 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys, time, logging, os, glob, netifaces, argparse
+import sys
+import time
+import logging
+import os
+import glob
+import netifaces
+import argparse
 
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from gmusicapi import Musicmanager
 from gmusicapi.exceptions import CallFailure
-
-__all__ = ['upload']
 
 __DEFAULT_IFACE__ = netifaces.gateways()['default'][netifaces.AF_INET][1]
 __DEFAULT_MAC__ = netifaces.ifaddresses(__DEFAULT_IFACE__)[netifaces.AF_LINK][0]['addr'].upper()

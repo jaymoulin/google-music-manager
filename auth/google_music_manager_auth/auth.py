@@ -3,10 +3,9 @@
 
 # Usage ./auth.py [path_to_oauth_cred_file=~/oauth]
 
-import sys, os
+import sys
+import os
 from gmusicapi import Musicmanager
-
-__all__ = ['auth']
 
 
 def auth(auth_file: str = os.environ['HOME'] + '/oauth') -> None:

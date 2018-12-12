@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys, logging, os.path, netifaces, argparse, os
+import sys
+import logging
+import netifaces
+import argparse
+import os
 from gmusicapi import Musicmanager
-
-__all__ = ['download']
 
 __DEFAULT_IFACE__ = netifaces.gateways()['default'][netifaces.AF_INET][1]
 __DEFAULT_MAC__ = netifaces.ifaddresses(__DEFAULT_IFACE__)[netifaces.AF_LINK][0]['addr'].upper()
