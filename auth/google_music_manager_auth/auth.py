@@ -9,7 +9,7 @@ from gmusicapi import Musicmanager
 __all__ = ['auth']
 
 
-def auth(auth_file=os.environ['HOME'] + '/oauth'):
+def auth(auth_file: str = os.environ['HOME'] + '/oauth') -> None:
     api = Musicmanager()
     if api.perform_oauth(auth_file):
         print("Logged successfully")

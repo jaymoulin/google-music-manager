@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys, time, logging, os.path, netifaces, argparse, os
+import sys, logging, os.path, netifaces, argparse, os
 from gmusicapi import Musicmanager
 
 __all__ = ['download']
@@ -10,7 +10,11 @@ __DEFAULT_IFACE__ = netifaces.gateways()['default'][netifaces.AF_INET][1]
 __DEFAULT_MAC__ = netifaces.ifaddresses(__DEFAULT_IFACE__)[netifaces.AF_LINK][0]['addr'].upper()
 
 
-def download(directory=".", oauth=os.environ['HOME'] + "/oauth", device_id=__DEFAULT_MAC__):
+def download(
+    directory: str = ".",
+    oauth: str = os.environ['HOME'] + "/oauth",
+    device_id: str = __DEFAULT_MAC__
+) -> None:
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     logger.info("Init Daemon - Press Ctrl+C to quit")

@@ -15,7 +15,7 @@ __DEFAULT_MAC__ = netifaces.ifaddresses(__DEFAULT_IFACE__)[netifaces.AF_LINK][0]
 
 
 class MusicToUpload(FileSystemEventHandler):
-    def on_created(self, event):
+    def on_created(self, event) -> None:
         self.logger.info("Detected new files!")
         if os.path.isdir(self.path):
             files = [file for file in glob.glob(glob.escape(self.path) + '/**/*', recursive=True)]
@@ -25,7 +25,16 @@ class MusicToUpload(FileSystemEventHandler):
             upload_file(self.api, event.src_path, self.logger, remove=self.remove)
 
 
-def upload_file(api, file_path, logger, remove=False):
+def upload_file(api: Musicmanager, file_path: str, logger: logging.Logger, remove: bool = False) -> None:
+    """
+    Uploads a specific file by its path
+    :param api: Musicmanager object to upload file though
+    :param file_path: Path to MP3 file to upload
+    :param logger: logging.Logger object for logs
+    :param remove: Boolean. should remove file? False by default
+    :raises CallFailure:
+    :return:
+    """
     retry = 5
     while retry > 0:
         try:
@@ -47,12 +56,12 @@ def upload_file(api, file_path, logger, remove=False):
 
 
 def upload(
-    directory='.',
-    oauth=os.environ['HOME'] + '/oauth',
-    remove=False,
-    uploader_id=__DEFAULT_MAC__,
-    oneshot=False
-):
+    directory: str = '.',
+    oauth: str = os.environ['HOME'] + '/oauth',
+    remove: bool = False,
+    uploader_id: str = __DEFAULT_MAC__,
+    oneshot: bool = False
+) -> None:
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     logger.info("Init Daemon - Press Ctrl+C to quit")
@@ -104,7 +113,13 @@ def main():
     )
     parser.add_argument("--oneshot", '-o', action='store_true', help="Upload folder and exit (default: False)")
     args = parser.parse_args()
-    upload(args.directory, args.oauth, args.remove, args.uploader_id, args.oneshot)
+    upload(
+        directory=args.directory,
+        oauth=args.oauth,
+        remove=args.remove,
+        uploader_id=args.uploader_id,
+        oneshot=args.oneshot
+    )
 
 
 if __name__ == "__main__":
