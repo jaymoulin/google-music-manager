@@ -29,21 +29,21 @@ This program will replace former Google MusicManager to upload/download your mus
 
 This work is based upon `Simon Weber's Google Music API <https://github.com/simon-weber/gmusicapi>`_.
 
-This program is now split in three modules:
+This program is now splitted in three modules:
 
-- Google Music Manager Auth
+- `Google Music Manager Auth <https://github.com/jaymoulin/google-music-manager-auth>`_
 
 .. image:: https://img.shields.io/github/release/jaymoulin/google-music-manager-auth.svg
     :alt: Google Music Manager Auth
     :target: http://github.com/jaymoulin/google-music-manager-auth/releases
 
-- Google Music Manager Downloader
+- `Google Music Manager Downloader <https://github.com/jaymoulin/google-music-manager-downloader>`_
 
 .. image:: https://img.shields.io/github/release/jaymoulin/google-music-manager-downloader.svg
     :alt: Google Music Manager Downloader
     :target: http://github.com/jaymoulin/google-music-manager-downloader/releases
 
-- Google Music Manager Uploader
+- `Google Music Manager Uploader <https://github.com/jaymoulin/google-music-manager-uploader>`_
 
 .. image:: https://img.shields.io/github/release/jaymoulin/google-music-manager-uploader.svg
     :alt: Google Music Manager Uploader
