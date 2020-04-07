@@ -21,6 +21,9 @@ Google Music Manager - Python Daemon
 .. image:: https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png
     :alt: Buy me a coffee
     :target: https://www.buymeacoffee.com/3Yu8ajd7W
+.. image:: https://badgen.net/badge/become/a%20patron/F96854
+    :alt: Become a Patron
+    :target: https://patreon.com/jaymoulin
 
 This program will replace former Google MusicManager to upload/download your music library to/from Google Music
 
